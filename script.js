@@ -133,19 +133,68 @@ document.addEventListener('DOMContentLoaded', function () {
         const percentage = Math.round((score / questions.length) * 100);
         scoreText.innerHTML = `Você acertou <strong>${score}</strong> de <strong>${questions.length}</strong> perguntas!<br>(${percentage}% de acerto)`;
         
-        if (percentage >= 80) {
-            prizeText.innerHTML = '🏆 Parabéns! Você ganhou <strong>2 Coquinhas</strong> e <strong>mini granolas da Jasmine</strong>!';
-        } else if (percentage >= 50) {
-            prizeText.innerHTML = '👍 Bom trabalho! Você ganhou <strong>1 Coquinha</strong>!';
-        } else {
-            prizeText.innerHTML = '✨ Obrigado por participar! Continue aprendendo!';
-        }
+        // Elementos da seção de agradecimento
+        const resultTitle = document.getElementById('result-title');
+        const resultMessage1 = document.getElementById('result-message-1');
+        const resultMessage2 = document.getElementById('result-message-2');
+        const resultMessage3 = document.getElementById('result-message-3');
+        const resultImage = document.getElementById('result-image');
         
-        postCredits.style.display = 'block';
-        setTimeout(() => {
-            postCredits.classList.add('active');
-            postCredits.scrollIntoView({ behavior: 'smooth' });
-        }, 500);
+        // Remove a classe 'loaded' para resetar a imagem
+        resultImage.classList.remove('loaded');
+        
+        // Define a nova imagem com base no desempenho
+        let imageUrl;
+        if (percentage >= 80) {
+            prizeText.innerHTML = '🏆 Uau! Você garantiu <strong>2 Coquinhas</strong> e <strong>mini granolas da Jasmine</strong>!';
+            resultTitle.textContent = '🎉 Sensacional! ';
+            resultMessage1.innerHTML = 'Seu conhecimento sobre nossos parceiros está <strong>no ponto!</strong>';
+            resultMessage2.innerHTML = 'Você mandou muito bem e mostrou que está preparado para qualquer desafio! Você garantiu <strong>2 Coquinhas</strong> e <strong>mini granolas da Jasmine</strong>!';
+            resultMessage3.innerHTML = 'Continue nesse ritmo e o sucesso será só uma consequência! ✨';
+            imageUrl = "https://usagif.com/wp-content/uploads/gif/obr1gdo-32.gif";
+        } else if (percentage >= 50) {
+            prizeText.innerHTML = '👍 Muito bem! Você ganhou <strong>1 Coquinha</strong> para refrescar o cérebro!';
+            resultTitle.textContent = '👏 Muito bem! tá no caminho certo!';
+            resultMessage1.textContent = 'Você foi bem, mas dá pra brilhar ainda mais!';
+            resultMessage2.innerHTML = 'Você garantiu <strong>2 Coquinhas</strong> e <strong>mini granolas da Jasmine</strong>!';
+            resultMessage3.textContent = 'Aprender é um superpoder, continue evoluindo! 🚀';
+            imageUrl = "https://usagif.com/wp-content/uploads/gif/obr1gdo-32.gif";
+        } else {
+            prizeText.innerHTML = '✨ Valeu por participar! Cada passo é um aprendizado!';
+            resultTitle.textContent = '💪 É só o começo!';
+            resultMessage1.textContent = 'Errar faz parte do caminho pra acertar!';
+            resultMessage2.innerHTML = 'Bora conhecer mais sobre <strong>Coca-Cola</strong> e <strong>Jasmine Alimentos</strong>?';
+            resultMessage3.textContent = 'Você pode tentar de novo quando quiser. Estamos na torcida! 🔁';
+            imageUrl = "https://usagif.com/wp-content/uploads/gif/obr1gdo-32.gif";
+        }
+
+        
+        // Pré-carrega a imagem antes de exibir
+        const imgLoader = new Image();
+        imgLoader.src = imageUrl;
+        imgLoader.onload = function() {
+            resultImage.src = imageUrl;
+            resultImage.onload = function() {
+                // Mostra a seção e a imagem
+                postCredits.style.display = 'block';
+                setTimeout(() => {
+                    postCredits.classList.add('active');
+                    resultImage.classList.add('loaded');
+                    postCredits.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            };
+        };
+        
+        // Fallback caso a imagem não carregue
+        imgLoader.onerror = function() {
+            resultImage.src = "https://odnet.com.br/wp-content/uploads/2019/07/obrigado.jpg";
+            postCredits.style.display = 'block';
+            setTimeout(() => {
+                postCredits.classList.add('active');
+                resultImage.classList.add('loaded');
+                postCredits.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        };
     }
 
     function restartQuiz() {
