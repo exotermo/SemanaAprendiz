@@ -237,7 +237,7 @@ footer {
     margin-top: 2rem;
 }
 
-/* Thank You Section */
+/* Thank You Section - Versão Corrigida */
 .thank-you-section {
     background: linear-gradient(135deg, #0066cc, #3a9d23);
     color: white;
@@ -258,42 +258,66 @@ footer {
 
 .thank-you-content {
     flex: 1;
-    min-width: 300px;
+    min-width: 100px;
 }
 
 .thank-you-image {
-    flex: 1;
-    min-width: 300px;
+    flex: 0 1 40%; /* Alterado para ocupar no máximo 40% da largura */
+    max-width: 400px; /* Largura máxima definida */
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0 auto; /* Centraliza a imagem */
 }
 
 .thank-you-image img {
     width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.5s ease;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 .thank-you-image:hover img {
     transform: scale(1.05);
 }
 
-.thank-you-section h2 {
+/* Garante que a imagem não ultrapasse o container */
+/* Aumenta a largura da imagem */
+.thank-you-image img {
+    max-width: 300%;
+    max-height: 200%; /* Mantém a altura limitada */
+}
+
+
+/* Estilo para os textos de resultado */
+#result-title {
     font-size: 2.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
     text-align: center;
 }
 
-.thank-you-message {
+.thank-you-message p {
     font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
 }
 
-.thank-you-message p {
-    margin-bottom: 1rem;
+/* Efeito de carregamento */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.thank-you-image img {
+    animation: fadeIn 0.5s ease-out forwards;
 }
 
 .signature {
@@ -420,4 +444,32 @@ footer {
         transform: scale(20, 20);
         opacity: 0;
     }
+}
+
+/* Garante que as imagens de resultado se ajustem corretamente */
+.thank-you-image img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Efeito de transição suave para troca de imagens */
+.thank-you-image img {
+    transition: opacity 0.5s ease;
+}
+
+/* Estilo para os textos de resultado */
+#result-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.thank-you-message p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
 }
